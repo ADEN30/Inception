@@ -19,13 +19,15 @@ sleep 10
 	#wp core config --dbname="$SQL_DATABASE" --dbuser="$SQL_USER" --dbpass="$SQL_PASSWORD" --dbhost="mariadb:3306"
 	#echo "abricot"
 #fi
+
 cd var/www/wordpress
 wp config create --dbname=database --dbuser=agallet --dbpass=password --dbhost=mariadb:3306 --allow-root --locale=fr_FR
+
 wp config path --allow-root
 
 #wp plugin update --all --allow-root
 
-#wp core install --url=example.com --title=Example --admin_user=supervisor --admin_password=strongpassword --admin_email=info@example.com --allow-root
+#wp core install --url=agallet.42.fr --title=inception --admin_user=$SQL_USER --admin_password=$SQL_PASSWORD --admin_email='adrien.gallet07@gmail.com' --allow-root
 
 if [ ! -d /run/php ]; then
     echo "/run/php does not exist. Creating it now..."
@@ -37,5 +39,4 @@ else
     echo "/run/php already exists."
 fi
 
-
-/usr/sbin/php-fpm7.3 -F
+exec /usr/sbin/php-fpm7.3 -F
