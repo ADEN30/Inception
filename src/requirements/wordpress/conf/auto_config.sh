@@ -2,32 +2,17 @@
 
 sleep 10
 
-#touch var/www/worpdress/wp-config.php
-#wp config path --allow-root
-#if [ ! -e "/var/www/wordpress/wp-config.php" ]; then
-#wp config delete wp-config-sample.php --path='/var/www/wordpress' --allow-root
-#wp config create --allow-root \
-#    --dbname=database \
-#    --dbuser=agallet \
-#    --dbpass=password \
-#    --dbhost=mariadb:3306 \
-	#--path=var/www/wordpress/ \
-#    --config-file=var/www/wordpress/wp-config.php
-
-
-#else
-	#wp core config --dbname="$SQL_DATABASE" --dbuser="$SQL_USER" --dbpass="$SQL_PASSWORD" --dbhost="mariadb:3306"
-	#echo "abricot"
-#fi
-
 cd var/www/wordpress
-wp config create --dbname=database --dbuser=agallet --dbpass=password --dbhost=mariadb:3306 --allow-root --locale=fr_FR
+if [ ! -e "/var/www/wordpress/wp-config.php" ]; then
+	wp config create --dbname=${SQL_DATABASE} --dbuser=${SQL_USER} --dbpass=${SQL_PASSWORD} --dbhost=${SQL_HOST} --allow-root --locale=fr_FR
 
-wp config path --allow-root
+fi
 
-#wp plugin update --all --allow-root
+if ! wp core is-installed -allow-root; then
+	wp core install --url=${URL} --title=${TITLE} --admin_user=${WP_ADMIN_USER} --admin-password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL} --skip-email --allow-root
+fi
 
-#wp core install --url=agallet.42.fr --title=inception --admin_user=$SQL_USER --admin_password=$SQL_PASSWORD --admin_email='adrien.gallet07@gmail.com' --allow-root
+cp user create ${WP_NEW_USER_NAME} ${WP_NEW_USER_EMAIL} --role=${WP_NEW_USER_ROLE} --user_pass=${WP_NEW_USER_PASSWORD} --allow-root
 
 if [ ! -d /run/php ]; then
     echo "/run/php does not exist. Creating it now..."
