@@ -9,7 +9,7 @@ if [ ! -e "/var/www/wordpress/wp-config.php" ]; then
 fi
 
 if ! wp core is-installed --allow-root; then
-	wp core install --url=${URL} --title=${TITLE} --admin_user=${WP_ADMIN_USER} --admin-password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL} --skip-email --allow-root
+	wp core install --url=${URL} --title=${TITLE} --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL} --skip-email --allow-root
 fi
 
 cp user create ${WP_NEW_USER_NAME} ${WP_NEW_USER_EMAIL} --role=${WP_NEW_USER_ROLE} --user_pass=${WP_NEW_USER_PASSWORD} --allow-root
