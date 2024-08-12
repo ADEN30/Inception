@@ -15,7 +15,7 @@ RUN chmod 777 wp-cli.phar
 RUN mv wp-cli.phar usr/local/bin/wp
 COPY conf/php7.3-fpm.conf etc/php/7.3/fpm/pool.d/www.conf
 
-COPY conf/auto_config.sh .
+COPY tools/auto_config.sh .
 RUN chmod +777 /auto_config.sh
 ENTRYPOINT ["/auto_config.sh"]
 
